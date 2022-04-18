@@ -17,9 +17,7 @@ export class CollectionService
     }
 
 
-    /** 
-     * @param {string} name 
-    */
+    
     static async CreateCollection(name)
     {
         try
@@ -35,10 +33,6 @@ export class CollectionService
     }
 
 
-    /** 
-     * @param {string} collectionId 
-     * @param {string} name 
-    */
     static async UpdateCollection(collectionId, name)
     {
         try
@@ -54,9 +48,6 @@ export class CollectionService
     }
 
 
-    /** 
-     * @param {string} collectionId
-    */
     static async DeleteCollection(collectionId)
     {
         try

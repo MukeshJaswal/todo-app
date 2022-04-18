@@ -2,12 +2,6 @@ import { Axios, SIGNIN_ROUTE, SIGNOUT_ROUTE, SIGNUP_ROUTE } from "../config/axio
 
 export class UserService
 {
-    /** 
-     * @param {string} firstName 
-     * @param {string} lastName 
-     * @param {string} email 
-     * @param {string} password 
-    */
     static async signUp(firstName, lastName, email, password)
     {
         try
@@ -23,10 +17,6 @@ export class UserService
     }
     
 
-    /** 
-     * @param {string} email 
-     * @param {string} password 
-    */
     static async signIn(email, password)
     {
         try
