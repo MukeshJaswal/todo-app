@@ -1,6 +1,7 @@
 import React from "react";
 import ReactLoading from 'react-loading';
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { AddInput } from "../components/AddInput";
 import { Checkbox } from "../components/Checkbox";
@@ -174,9 +175,20 @@ const CollectionsPage = () => {
                             :
                             <CollectionsCardContainer>
                                 {
-                                    collections.map(collection => (
-                                        <CollectionCard key={collection._id} name={collection.name}/>
-                                    ))
+                                    collections.map(collection => {
+
+                                        let completedTasksCount = collection.tasks.filter(task => task.completed === true).length;
+
+                                        return (
+                                            <Link key={collection._id} to={`/${collection._id}/tasks`} style={{ width: '100%', textDecoration: 'none' }}>
+                                                <CollectionCard 
+                                                    name={collection.name} 
+                                                    completedTasks={completedTasksCount}
+                                                    totalTasks={collection.tasks.length}
+                                                />
+                                            </Link>
+                                        )
+                                    })
                                 }
                             </CollectionsCardContainer>
                         }

@@ -27,5 +27,5 @@ export const DELETE_COLLECTION_ROUTE = (collectionId) => `/delete/collection/${c
 // Task Routes
 export const GET_TASKS_ROUTE = (collectionId) => `/${collectionId}/tasks`;
 export const CREATE_TASK_ROTUE = (collectionId) => `/create/${collectionId}/task`;
-export const UPDATE_TASK_ROTUE = (collectionId, taskId) => `/update/${collectionId}/task/${taskId}`;
-export const DELETE_TASK_ROTUE = (collectionId, taskId) => `/delete/${collectionId}/task/${taskId}`;
+export const UPDATE_TASK_ROTUE = (collectionId, taskId) => `/${collectionId}/task/${taskId}`;
+export const DELETE_TASK_ROTUE = (collectionId, taskId) => `/${collectionId}/task/${taskId}`;

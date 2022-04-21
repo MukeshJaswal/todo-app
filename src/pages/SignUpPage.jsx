@@ -145,7 +145,7 @@ export const SignUpPage = () => {
                     <TextField placeholder="First Name" value={firstName} onChange={e => setFirstName(e.target.value)}/>
                     <TextField placeholder="Last Name" value={lastName} onChange={e => setLastName(e.target.value)}/>
                     <TextField placeholder="Email" value={email} onChange={e => setEmail(e.target.value)}/>
-                    <TextField placeholder="Password" value={password} onChange={e => setPassword(e.target.value)}/>
+                    <TextField placeholder="Password" type="password" value={password} onChange={e => setPassword(e.target.value)}/>
 
                     <Button disabled={!(validator.isEmail(email) && (password.length >= 8 && password.length <= 16) && (firstName.length >= 1 && firstName.length <= 20) && (lastName.length >= 1 && lastName.length <= 20))} width="100%">
                     {

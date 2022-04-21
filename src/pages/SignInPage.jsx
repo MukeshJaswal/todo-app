@@ -137,7 +137,7 @@ export const SignInPage = () => {
             <AuthForm onSubmit={onSubmit}>
                 <FieldSet disabled={disableFields}>
                     <TextField placeholder="Email" value={email} onChange={onSetEmail}/>
-                    <TextField placeholder="Password" value={password} onChange={onSetPassword}/>
+                    <TextField placeholder="Password" type="password" value={password} onChange={onSetPassword}/>
 
                     <Button disabled={!(validator.isEmail(email) && (password.length >= 8 && password.length <= 16))} width="100%">
                     {

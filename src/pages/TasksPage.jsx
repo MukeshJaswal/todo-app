@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 import ReactLoading from 'react-loading';
@@ -7,6 +7,8 @@ import { AddInput } from "../components/AddInput";
 import { Checkbox } from "../components/Checkbox";
 import { TaskCard } from "../components/TaskCard";
 import { AppLayout } from "../layout/AppLayout";
+import { addTask, addTasks } from "../redux/appReducer";
+import { TaskService } from "../services/taskService";
 
 const Container = styled.div`
     width: 100%;
@@ -91,19 +93,45 @@ const EmptyTaskText = styled.p`
 
 const TasksPage = (props) => {
 
-    const params = useParams();
+    const { collectionId } = useParams();
 
+    const [ taskText, setTaskText ] = React.useState('');
+    const [ disableField, setDisableField ] = React.useState(false);
     const [ loading, setLoading ] = React.useState(false);
-    const collections = undefined;
+    const collections = useSelector(state => state.app.collections);
+    const tasks = useSelector(state => state.app.activeCollectionTasks);
+    const dispatch = useDispatch();
 
     React.useEffect(() => {
-        console.log(params);
+        setLoading(true);
+        dispatch(addTasks(collections.find(collection => collection._id === collectionId).tasks.filter(task => task.collectionId === collectionId)));
+        setLoading(false);
     }, [])
 
     return (
         <Container>
             <Wrapper>
-                <AddInput placeholder="Type here to create a Task" />
+                <AddInput 
+                    placeholder="Type here to create a Task" 
+                    value={taskText}
+                    onChange={e => setTaskText(e.target.value)}
+                    disabledSubmit={taskText !== '' ? false : true}
+                    disableFields={disableField}
+                    onSubmit={e => {
+                        setDisableField(true);
+
+                        TaskService.CreateTask(collectionId, taskText)
+                        .then(response => {
+                            response.status === 201 && setTaskText('');
+                            dispatch(addTask({ collectionId: collectionId, task: response.data }));
+                            setDisableField(false);
+                        })
+                        .catch(err => {
+                            setDisableField(false);
+                            console.log(err);
+                        })
+                    }}    
+                />
 
                 <TaskSection>
                     <TasksHeader>Tasks: {props.collectionName}</TasksHeader>
@@ -126,9 +154,17 @@ const TasksPage = (props) => {
                             :
                             <TasksCardContainer>
                                 {
-                                    [...Array(10)].map(collection => (
-                                        <TaskCard key={collection} name='Hello'/>
-                                    ))
+                                    tasks.map(task => {
+                                        return (
+                                            <TaskCard 
+                                                key={task._id}
+                                                taskId={task._id}
+                                                collectionId={collectionId}
+                                                text={task.text}
+                                                completed={task.completed}
+                                            />
+                                        )
+                                    })
                                 }
                             </TasksCardContainer>
                         }

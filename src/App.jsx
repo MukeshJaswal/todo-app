@@ -44,7 +44,7 @@ export const App = () => {
                     />
 
                     <Route 
-                        path="/collection/:collectionId"
+                        path="/:collectionId/tasks"
                         element={
                             <RequireAuth>
                                 <TasksPage />
